@@ -1,1 +1,0 @@
-# school_21_cub3D
