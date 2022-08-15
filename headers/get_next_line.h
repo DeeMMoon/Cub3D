@@ -1,49 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/15 18:11:30 by gantedil         ###   ########.fr       */
+/*   Created: 2022/08/15 17:08:50 by gantedil          #+#    #+#             */
+/*   Updated: 2022/08/15 17:08:52 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4000
+# endif
 
 # include <stdlib.h>
-# include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
 
-# include "get_next_line.h"
-# include "libft.h"
-
-# define WIDTH 1000
-# define HEIGHT 1000
-
-typedef struct s_config
-{
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	*floor;
-	char	*ceiling;
-}			t_config;
-
-typedef struct s_map
-{
-	int			height;
-	int			width;
-	t_config	*config;
-}			t_map;
-
-void	ft_error(char *str);
-char	*not_empty_gnl(int fd);
-char	**ft_split(char const *s, char c);
-
-
+size_t	ft_strlen(const char *s);
+char	*str_join(char *str1, char *str2);
+char	*get_remain(char *str);
+char	*get_line(char *str);
+int		is_read(char *str);
+char	*get_next_line(int fd);
 #endif

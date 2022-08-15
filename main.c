@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/14 21:08:56 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/15 16:44:19 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	ft_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	init_map(t_map *map)
+void	init_map(t_map *map, t_config *config)
 {
 	map->height = -1;
 	map->width = -1;
+	map->config = config;
 }
 
 void	init_config(t_config *config)
@@ -63,7 +64,7 @@ int	main(int argc, char **argv)
 		map = (t_map *) malloc (sizeof (t_map));
 		if (!map)
 			ft_errors("Init faled");
-		init_map(map);
+		init_map(map, config);
 		parse_file(map, argv[1]);
 	}
 	return (0);

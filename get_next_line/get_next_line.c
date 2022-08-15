@@ -6,11 +6,11 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:55 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/09 20:52:50 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:09:47 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/cub.h"
+#include "headers/get_next_line.h"
 
 char	*get_remain(char *str)
 {
