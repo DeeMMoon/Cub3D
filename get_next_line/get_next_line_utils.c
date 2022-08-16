@@ -6,11 +6,11 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:57:30 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/15 17:09:39 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/16 12:51:49 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/get_next_line.h"
+#include "../headers/get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {

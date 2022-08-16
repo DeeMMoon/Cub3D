@@ -8,7 +8,7 @@ OBJECTS = $(SOURCES:%.c=%.o)
 
 OBJECTS_B = $(SOURCES_B:%.c=%.o)
 
-HEADER = headers
+HEADER = ../headers
 
 NAME = libft.a
 

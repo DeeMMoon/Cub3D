@@ -6,11 +6,11 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 17:10:59 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/15 17:52:00 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:21:15 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../headers/cub.h"
 
 int	is_empty(char *line)
 {
@@ -20,8 +20,8 @@ int	is_empty(char *line)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\n')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 char	*not_empty_gnl(int fd)

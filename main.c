@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/15 16:44:19 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/16 15:18:42 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_map(t_map *map, t_config *config)
 {
 	map->height = -1;
 	map->width = -1;
+	map->ceiling_color = -1;
+	map->floor_color = -1;
 	map->config = config;
 }
 
@@ -42,8 +44,8 @@ int	check_filename(char *filename)
 	i = 0;
 	while (filename[i])
 		i++;
-	if (filename[i - 1] != 'c' || filename[i - 2] != 'u' \
-		|| filename[i - 3] != 'b' || filename[i - 4] != '.')
+	if (filename[i - 1] != 'b' || filename[i - 2] != 'u' \
+		|| filename[i - 3] != 'c' || filename[i - 4] != '.')
 		ft_error("File name");
 	return (0);
 }
@@ -59,11 +61,11 @@ int	main(int argc, char **argv)
 		check_filename(argv[1]);
 		config = (t_config *) malloc(sizeof (t_config));
 		if (!config)
-			ft_errors("Init faled");
+			ft_error("Init faled");
 		init_config(config);
 		map = (t_map *) malloc (sizeof (t_map));
 		if (!map)
-			ft_errors("Init faled");
+			ft_error("Init faled");
 		init_map(map, config);
 		parse_file(map, argv[1]);
 	}
