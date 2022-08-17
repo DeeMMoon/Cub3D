@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/16 15:18:42 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/08/17 18:27:33 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	ft_error(char *str)
 
 void	init_map(t_map *map, t_config *config)
 {
-	map->height = -1;
-	map->width = -1;
+	map->height = 0;
+	map->width = 0;
 	map->ceiling_color = -1;
 	map->floor_color = -1;
 	map->config = config;
+	map->new_map = NULL;
 }
 
 void	init_config(t_config *config)

@@ -2,9 +2,9 @@
 CC	= gcc -g
 
 SOURCES	= main.c \
-			parser/parse_file.c parser/parse_texture.c parser/parse_texture_utils.c\
+			parser/parse_file.c parser/parse_texture.c parser/parse_texture_utils.c parser/parse_map.c\
 			get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
-			util/not_empty_gnl.c 
+			util/not_empty_gnl.c util/map_util.c
 		
 
 OBJECTS	= $(SOURCES:%.c=%.o)
