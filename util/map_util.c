@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:50:24 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/17 19:08:48 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:12:28 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_norm_lenght_line(char *str, int max_len)
 		line[i] = str[i];
 		i++;
 	}
-	while (i < max_len - 1)
+	while (i < max_len)
 	{
 		line[i] = ' ';
 		i++;

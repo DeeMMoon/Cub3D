@@ -6,104 +6,93 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:55 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/16 12:51:53 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:34:52 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/get_next_line.h"
 
-char	*get_remain(char *str)
+char	*ft_newost(char *ost)
 {
-	char	*p;
-	int		i;
-	int		k;
-
-	if (!str)
-		return (0);
-	i = 0;
-	k = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-	{
-		free (str);
-		return (0);
-	}
-	p = (char *) malloc (sizeof(char) * (ft_strlen(str) - i + 1));
-	if (!p)
-		return (0);
-	i++;
-	while (str[i])
-		p[k++] = str[i++];
-	p[k] = '\0';
-	free(str);
-	return (p);
+	ost = malloc(sizeof(char));
+	if (!ost)
+		return ((void *) 0);
+	*ost = '\0';
+	return (ost);
 }
 
-char	*get_line(char *str)
+char	*ft_strdup_gnl(const char *s1)
 {
-	char	*p;
+	char	*mem;
+	int		len;
 	int		i;
 
+	len = ft_strlen_gnl(s1);
 	i = 0;
-	if (!str || !str[i])
-		return (0);
-	while (str[i] && str[i] != '\n')
-		i++;
-	p = (char *) malloc (sizeof(char) * (i + 2));
-	if (!p)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] != '\n')
+	mem = malloc((len + 1) * sizeof(char));
+	if (!mem)
+		return (NULL);
+	while (i < len)
 	{
-		p[i] = str[i];
+		mem[i] = s1[i];
 		i++;
 	}
-	if (str[i] == '\n' && str[i - 1] == ' ')
-		p[(i--) - 1] = '\n';
-	if (str[i] == '\n')
-		p[i++] = '\n';
-	p[i] = '\0';
-	return (p);
+	mem[i - 1] = '\0';
+	return (mem);
 }
 
-int	is_read(char *str)
+char	*get_result(char *ost, int rd)
 {
-	int	i;
+	char	*result;
 
-	i = 0;
-	if (!str)
-		return (1);
-	while (str[i])
+	if (rd > 0)
+		result = ft_substr_gnl(ost, 0, (ft_strchr_gnl(ost, '\n')) - ost + 1);
+	else if (rd == -1 || (rd == 0 && *ost == '\0'))
 	{
-		if (str[i] == '\n')
-			return (0);
-		i++;
+		free(ost);
+		return (NULL);
 	}
-	return (1);
+	else
+		result = ft_strdup_gnl(ost);
+	return (result);
+}
+
+int	ft_newrd(char **ost, int rd, char *buff, int fd)
+{
+	char		*tmp;
+
+	buff[rd] = '\0';
+	tmp = ft_strjoin_gnl(*ost, buff);
+	free(*ost);
+	*ost = tmp;
+	if (!ft_strchr_gnl(*ost, '\n'))
+		rd = read(fd, buff, BUFFER_SIZE);
+	return (rd);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*remain;
 	char		buff[BUFFER_SIZE + 1];
-	int			reader;
+	static char	*ost;
+	int			rd;
+	char		*result;
+	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	reader = 1;
-	while (is_read(remain) && reader != 0)
+	if (ost == 0)
+		ost = ft_newost(ost);
+	rd = 1;
+	if (!ft_strchr_gnl(ost, '\n'))
+		rd = read(fd, buff, BUFFER_SIZE);
+	while (!(ft_strchr_gnl(ost, '\n')) && (rd) > 0)
+		rd = ft_newrd(&ost, rd, buff, fd);
+	result = get_result(ost, rd);
+	if (!result)
 	{
-		reader = read (fd, buff, BUFFER_SIZE);
-		if (reader == -1)
-			return (0);
-		buff[reader] = '\0';
-		remain = str_join(remain, buff);
-	}
-	if (!remain)
-		return (0);
-	line = get_line(remain);
-	remain = get_remain(remain);
-	return (line);
+		ost = NULL;
+		return (NULL);
+	}	
+	tmp = ft_strdup_gnl(ost + (ft_strlen_gnl(result)));
+	free(ost);
+	ost = tmp;
+	return (result);
 }

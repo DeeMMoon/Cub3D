@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 17:10:59 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/17 18:29:06 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/03 16:40:54 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_empty(char *line)
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (line[i] == '\n')
+	if (line[i] == '\0')
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:09:25 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/17 19:01:29 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/03 19:14:04 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,13 @@ void	parse_map(t_map *map, int fd, char *file)
 			free(line);
 			ft_error ("Wrong arguments");
 		}
-		map->width = ft_max(strlen(line), map->width);
+		printf("line = |%s|\n", line);
+		map->width = ft_max(ft_strlen(line), map->width);
 		map->height++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	free (line);
-	print_info(map);
-//	printf("%s\n", first_line);
 	create_new_map(map, file, first_line);
 }
 

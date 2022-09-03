@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:27:09 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/17 21:25:58 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/03 18:42:49 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,101 +16,87 @@ int	check_top(t_map *map)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = 0;
-	k = 0;
 	while (map->new_map[0][i])
 	{
 		if (map->new_map[0][i] != ' ' && map->new_map[0][i] != '1')
 			return (1);
-		j = 1;
-		while (j < map->height)
-		{
-			if (map->new_map[j][i] == '1')
-			{
-				while (j < map->height && map->new_map[j][i] != ' ')
-					j++;
-			}
-			if (j < map->height && map->new_map[j][i] == ' ')
-			{
-				k++;
-				if (j + 1 < map->height && map->new_map[j + 1][i] != ' ' \
-					&& map->new_map[j + 1][i] != '1')
-					return (1);
-			}
-			j++;
-		}
-		if (k == map->height)
+		j = 0;
+		if (util_top(map, &j, &i))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-// int	check_left(t_map *map)
-// {
-// 	int	i;
-// 	int	j;
+int	check_left(t_map *map)
+{
+	int	i;
+	int	j;
+	int	k;
 
-// 	i = 0;
-// 	while (i < map->height)
-// 	{
-// 		if (map->new_map[i][0] != ' ' && map->new_map[i][0] != '1')
-// 			return (1);
-// 		if (map->new_map[i][0] == ' ')
-// 		{
-// 			j = 1;
-// 			while (map->new_map[i][j] && map->new_map[i][j] != '1')
-// 			{
-// 				if (map->new_map[i][j] != ' ')
-// 					return (1);
-// 				j++;
-// 			}
-// 			if (j == map->width)
-// 				return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	k = 0;
+	while (i < map->height)
+	{
+		if (map->new_map[i][0] != ' ' && map->new_map[i][0] != '1')
+			return (1);
+		j = 0;
+		k = 0;
+		if (util_left(map, &j, &i, &k))
+			return (1);
+		if (k > map->width - 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-// int	check_bottom(t_map *map)
-// {
-// 	int	i;
-// 	int	j;
+int	check_bottom(t_map *map)
+{
+	int	i;
+	int	j;
 
-// 	i = 0;
-// 	while (map->new_map[map->height - 1][i])
-// 	{
-// 		if (map->new_map[map->height - 1][i] != ' ' \
-// 			&& map->new_map[map->height - 1][i] != '1')
-// 			return (1);
-// 		if (map->new_map[map->height - 1][i] == ' ')
-// 		{
-// 			j = map->height - 2;
-// 			while (j >= 0 && map->new_map[j][i] != '1')
-// 			{
-// 				if (map->new_map[j][i] != ' ')
-// 					return (1);
-// 				j--;
-// 			}
-// 			if (j == 0)
-// 				return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	while (map->new_map[map->height - 1][i])
+	{
+		if (map->new_map[map->height - 1][i] != ' ' \
+			&& map->new_map[map->height - 1][i] != '1')
+			return (1);
+		j = map->height - 1;
+		if (util_bottom(map, &j, &i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-/* Передалать проверки границ слева и снизу по аналогии с проверкой сверху
-	Написать проверку границы справа
-	Но сначала подогнать под норму функцию проверки сверху
-*/
+int	check_right(t_map *map)
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	while (i < map->height)
+	{
+		if (map->new_map[i][map->width - 1] != ' ' 
+			&& map->new_map[i][map->width - 1] != '1')
+			return (1);
+		j = map->width - 1;
+		if (util_right(map, &j, &i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+	
 int	check_map(t_map *map)
 {
-	if (check_top(map))
+	if (map->width - 1 < 3 || map->height < 3)
+		return (1);
+	if (check_top(map)|| check_left(map) || check_bottom(map) \
+		|| check_right(map))
 		return (1);
 	return (0);
 }
@@ -135,14 +121,9 @@ void	create_new_map(t_map *map, char *file, char *first_line)
 		line = get_next_line(fd);
 		i++;
 	}
-	i = 0;
-	while (i < map->height)
-	{
-		printf("|%s|\n", map->new_map[i]);
-		i++;
-	}
 	if (line)
 		free(line);
 	if (check_map(map))
 		ft_error("Ivalid map");
+	fill_map(map);
 }
