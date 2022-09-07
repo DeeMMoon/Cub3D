@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 21:09:25 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 19:14:04 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:06:23 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	parse_texture(t_map *map, int fd)
 	while (i != 6)
 	{
 		line = not_empty_gnl(fd);
-//		printf("line = %s\n", line);
 		if (check_config(line, map))
 		{
 			free (line);
@@ -67,7 +66,6 @@ void	parse_map(t_map *map, int fd, char *file)
 			free(line);
 			ft_error ("Wrong arguments");
 		}
-		printf("line = |%s|\n", line);
 		map->width = ft_max(ft_strlen(line), map->width);
 		map->height++;
 		free(line);

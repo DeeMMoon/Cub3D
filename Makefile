@@ -1,40 +1,68 @@
+SRCS		=	$(wildcard parser/*.c)			\
+				$(wildcard util/*.c)			\
+				$(wildcard get_next_line/*.c)	\
+				main.c
 
-CC	= gcc -g
+OBJS		=	$(SRCS:.c=.o)
 
-SOURCES	= main.c \
-			parser/parse_file.c parser/parse_texture.c parser/parse_texture_utils.c parser/parse_map.c parser/parse_map_utils.c\
-			get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
-			util/not_empty_gnl.c util/map_util.c
-		
+B_OBJS		=	$(B_SRCS:.c=.o)
 
-OBJECTS	= $(SOURCES:%.c=%.o)
+HEAD		=	includes
 
-HEADER	= headers
+GNL_HEAD	=	get_next_line
 
-NAME 	= cub3D
+NAME		=	cub3D
 
-LIB		= libft/libft.a
+FRAMEWORKS	=	-framework OpenGL -framework AppKit
 
-FLAGS 	=  -Werror -Wextra -Wall  -I $(HEADER)
+LIBNAME		=	libft.a
 
-.PHONY	: all clean fclean re
+LIBPATH		=	libft
 
-all	: $(NAME)
+LIB			=	$(addprefix $(addsuffix /, $(LIBPATH)), $(LIBNAME))
 
-$(NAME)	: $(HEADER) $(OBJECTS)
-	make -C libft
-	make -C libft bonus
-	$(CC) $(FLAGS) $(OBJECTS) $(LIB) -o $(NAME) 
+MLX			=	mlx
 
-%.o	: %.c $(HEADER)
-	$(CC) $(FLAGS) -c $< -o $@
+MLXNAME		=	libmlx.a
 
-clean	:
-	make -C libft clean
-	rm -f $(OBJECTS)
+DINLIB		=	libmlx.dylib
 
-fclean	: clean
-	make -C libft fclean
-	rm -f $(NAME)
+GCC			=	gcc
 
-re	: fclean all
+FLAGS		=	-Wall -Werror -Wextra -o2 -Imlx -I$(HEAD) -I$(LIBPATH) -I$(GNL_HEAD) #-fsanitize=address #-g
+
+RM			=	rm -f
+
+%.o:	%.c $(wildcard $(HEAD)/*.h)
+		$(GCC) $(FLAGS) -c $< -o $@ 
+
+$(NAME):	$(HEADS) $(LIB) $(OBJS)
+			make -C libft
+			make -C libft bonus
+			$(GCC) $(FLAGS) $(OBJS) $(LIB) $(MLX)/$(MLXNAME) $(FRAMEWORKS) -o $(NAME)
+
+$(B_NAME):	$(B_HEADS) $(LIB) $(B_OBJS)
+			$(GCC) $(FLAGS) $(B_OBJS) $(LIB) $(MLX)/$(MLXNAME) $(FRAMEWORKS) -o $(B_NAME)
+
+$(LIB):		lib
+
+lib:		
+			@$(MAKE) -C $(LIBPATH) bonus
+			@$(MAKE) -C $(MLX)
+
+all:	$(NAME)
+
+bonus:	$(B_NAME)
+	
+clean:
+		@$(MAKE) -C $(LIBPATH) clean
+		$(RM) $(OBJS) $(B_OBJS)
+
+fclean: clean
+		@$(MAKE) -C $(MLX) clean
+		@$(MAKE) -C $(LIBPATH) fclean
+		rm -f $(NAME)
+
+re:		fclean all
+
+.PHONY:	all clean fclean lib bonus

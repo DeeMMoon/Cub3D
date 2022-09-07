@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 16:24:22 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 18:41:00 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:08:41 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void fill_map(t_map *map)
 		while (map->new_map[i][j])
 		{
 			if (map->new_map[i][j] == ' ')
-				map->new_map[i][j] = '0';
+				map->new_map[i][j] = '1';
 			j++;
 		}
 		i++;

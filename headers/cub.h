@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 19:22:37 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:59:07 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ typedef struct s_map
 	t_config	*config;
 }			t_map;
 
-typedef struct s_mlx
-{
-	void	*ptr;
-	void	*win;
-}			t_mlx;
-
 typedef struct s_img
 {
 	void	*img;
@@ -74,7 +68,10 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	//todo
+	t_map	*map;
+	t_img	*img;
+	void	*ptr;
+	void	*win;
 }			t_data;
 
 void	ft_error(char *str);
@@ -100,5 +97,10 @@ int		util_left(t_map *map, int *j, int *i, int *k);
 int		util_bottom(t_map *map, int *j, int *i);
 int		util_right(t_map *map, int *j, int *i);
 void	fill_map(t_map *map);
+
+int		init_data(t_data *data, t_map *map);
+void	init_config(t_config *config);
+void	init_map(t_map *map, t_config *config);
+int		deal_key(int key, t_data *data);
 
 #endif
