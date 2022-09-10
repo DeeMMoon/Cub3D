@@ -1,6 +1,7 @@
 SRCS		=	$(wildcard parser/*.c)			\
 				$(wildcard util/*.c)			\
 				$(wildcard get_next_line/*.c)	\
+				$(wildcard draw_image/*.c)			\
 				main.c
 
 OBJS		=	$(SRCS:.c=.o)

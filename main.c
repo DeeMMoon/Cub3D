@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/07 17:01:24 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:14:23 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	close_win(t_data *data)
 {
 	mlx_destroy_image(data->ptr, data->img->img);
 	mlx_destroy_window(data->ptr, data->win);
-	free(data->ptr);
 	exit(EXIT_SUCCESS);
 }
 
@@ -61,6 +60,7 @@ int	main(int argc, char **argv)
 		data = (t_data *) malloc(sizeof (t_data));
 		if (!init_data(data, map))
 			ft_error("Init faled");
+		draw_image(data);
 		mlx_hook(data->win, 17, 0L, close_win, map);
 		mlx_key_hook(data->win, deal_key, map);
 		mlx_loop(data->ptr);

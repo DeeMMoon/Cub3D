@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:48:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/07 17:00:13 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:11:58 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ int	init_data(t_data *data, t_map *map)
 	data->img->img = mlx_new_image(data->ptr, HEIGHT, WIDTH);
 	data->img->addr = mlx_get_data_addr(data->img->img, &(data->img->bits_per_pixel) \
 	, &(data->img->line_length), &(data->img->endian));
-	//todo
+	data->dirX = -1;
+	data->dirY = 0;
+	data->planeX = 0;
+	data->planeY = 0.66;
+	data->time = 0;
+	data->oldTime = 0;
+
 	return(1);
 }
 

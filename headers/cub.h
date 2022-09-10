@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/07 16:59:07 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/10 20:37:38 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,24 @@ typedef struct s_data
 	t_img	*img;
 	void	*ptr;
 	void	*win;
+	double	posX;
+	double 	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	time;
+	double	oldTime;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	char	orientation;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
 }			t_data;
 
 void	ft_error(char *str);
@@ -102,5 +120,6 @@ int		init_data(t_data *data, t_map *map);
 void	init_config(t_config *config);
 void	init_map(t_map *map, t_config *config);
 int		deal_key(int key, t_data *data);
+void	draw_image(t_data *data);
 
 #endif
