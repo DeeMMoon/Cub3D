@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:48:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/10 21:11:58 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:55:57 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,37 @@ int	init_data(t_data *data, t_map *map)
 	data->planeY = 0.66;
 	data->time = 0;
 	data->oldTime = 0;
-
+	data->num_map = NULL;
 	return(1);
 }
 
 int	deal_key(int key, t_data *data)
 {
-	// if (key == 123)
-	// 	map->shift_x -= 10;
-	// if (key == 124)
-	// 	map->shift_x += 10;
-	// if (key == 126)
-	// 	map->shift_y -= 10;
-	// if (key == 125)
-	// 	map->shift_y += 10;
-	// if (key == 69)
-	// 	map->zoom += 2;
-	// if (key == 78 && map->zoom >= 3)
-	// 	map->zoom -= 2;
-	 if (key == KEY_ESC)
+	if (key == KEY_A)
+	{
+	}
+	if (key == KEY_D)
+	{}
+	if (key == KEY_S)
+	{}
+	if (key == KEY_W)
+	{	
+		printf("YES\n");	
+		if(data->num_map[(int)(data->posY + data->dirY * MOVE_SPEED)][(int) data->posX] == 0)
+			data->posY += data->dirY * MOVE_SPEED;
+		if(data->num_map[(int) data->posY][(int)(data->posX + data->dirX * MOVE_SPEED)] == 0)
+			data->posX += data->dirX * MOVE_SPEED;
+	}
+	if (key == KEY_LEFT)
+	{}
+	if (key == KEY_RIGHT)
+	{}
+	if (key == KEY_ESC)
 		exit(EXIT_SUCCESS);
-	mlx_clear_window(data->ptr, data->win);
 	mlx_destroy_image(data->ptr, data->img->img);
 	data->img->img = mlx_new_image(data->ptr, HEIGHT, WIDTH);
-	//drow_map(map);
+	data->img->addr = mlx_get_data_addr(data->img->img, &data->img->bits_per_pixel, &data->img->line_length, &data->img->endian);
+	draw_image(data);
 	mlx_put_image_to_window(data->ptr, data->win, data->img->img, 0, 0);
 	return (0);
 }

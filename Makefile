@@ -30,7 +30,7 @@ DINLIB		=	libmlx.dylib
 
 GCC			=	gcc
 
-FLAGS		=	-Wall -Werror -Wextra -o2 -Imlx -I$(HEAD) -I$(LIBPATH) -I$(GNL_HEAD) #-fsanitize=address #-g
+FLAGS		=	 -o2 -Imlx -I$(HEAD) -I$(LIBPATH) -I$(GNL_HEAD) #-fsanitize=address #-g
 
 RM			=	rm -f
 

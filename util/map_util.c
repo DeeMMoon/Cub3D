@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:50:24 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 16:12:28 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:37:12 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,36 @@ char	*get_norm_lenght_line(char *str, int max_len)
 	return (line);
 }
 
+void	create_num_map(t_data *data)
+{
+	int	i;
+	int	j;
+
+	data->num_map = (int **) malloc(sizeof(int *) * (data->map->height + 1));
+	if (!data->num_map)
+		ft_error("Fault init");
+	i = 0;
+	//printf("%d\n", data->map->width);
+	while (i < data->map->height)
+	{
+		data->num_map[i] = (int *) malloc(sizeof(int) * (data->map->width + 1));
+		if (!data->num_map[i])
+			ft_error("Fault init");
+		i++;
+	}
+	i = 0;
+	j = 0;
+	while(i <= data->map->height - 1)
+	{
+		j = 0;
+		while (j < data->map->width)
+		{
+			if (data->map->new_map[i][j] == '1')
+				data->num_map[i][j] = 1;
+			else
+				data->num_map[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+}
