@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:48:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/12 19:55:57 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:34:14 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,68 @@ int	init_data(t_data *data, t_map *map)
 	data->dirY = 0;
 	data->planeX = 0;
 	data->planeY = 0.66;
-	data->time = 0;
-	data->oldTime = 0;
 	data->num_map = NULL;
 	return(1);
+}
+
+void rotate_keys(int key, t_data *data)
+{
+	double oldDirX;
+	double oldPlaneX;
+
+	if (key == KEY_RIGHT)
+	{
+		oldDirX = data->dirX;
+		data->dirX = data->dirX * cos(-ROT_SPEED) - data->dirY * sin(-ROT_SPEED);
+		data->dirY = oldDirX * sin(-ROT_SPEED) + data->dirY * cos(-ROT_SPEED); 
+		oldPlaneX = data->planeX;
+		data->planeX = data->planeX * cos(-ROT_SPEED) - data->planeY * sin(-ROT_SPEED);
+		data->planeY = oldPlaneX * sin(-ROT_SPEED) + data->planeY * cos(-ROT_SPEED);
+	}
+	if (key == KEY_LEFT)
+	{
+		oldDirX = data->dirX;
+		data->dirX = data->dirX * cos(ROT_SPEED) - data->dirY * sin(ROT_SPEED);
+		data->dirY = oldDirX * sin(ROT_SPEED) + data->dirY * cos(ROT_SPEED); 
+		oldPlaneX = data->planeX;
+		data->planeX = data->planeX * cos(ROT_SPEED) - data->planeY * sin(ROT_SPEED);
+		data->planeY = oldPlaneX * sin(ROT_SPEED) + data->planeY * cos(ROT_SPEED);
+	}
 }
 
 int	deal_key(int key, t_data *data)
 {
 	if (key == KEY_A)
 	{
+		if(data->num_map[(int) (data->posY + data->dirY * MOVE_SPEED - MOVE_SPEED)][(int) (data->posX)] == 0)
+			data->posY += data->dirX * MOVE_SPEED;
+		if(data->num_map[(int) (data->posY)][(int) (data->posX + data->dirX * MOVE_SPEED - MOVE_SPEED)] == 0)
+			data->posX += data->dirY * MOVE_SPEED;
+		printf("%f\n", data->dirX);
+		printf("%f\n", data->dirY);
 	}
 	if (key == KEY_D)
-	{}
-	if (key == KEY_S)
-	{}
+	{
+		if(data->num_map[(int) (data->posY - data->dirY * MOVE_SPEED + MOVE_SPEED)][(int)((int) data->posX)] == 0)
+			data->posY -= data->dirY * MOVE_SPEED;
+		if(data->num_map[(int) (data->posY)][(int)(data->posX - data->dirX * MOVE_SPEED)] == 0)
+			data->posX -= data->dirX * MOVE_SPEED;
+	}
 	if (key == KEY_W)
 	{	
-		printf("YES\n");	
 		if(data->num_map[(int)(data->posY + data->dirY * MOVE_SPEED)][(int) data->posX] == 0)
 			data->posY += data->dirY * MOVE_SPEED;
 		if(data->num_map[(int) data->posY][(int)(data->posX + data->dirX * MOVE_SPEED)] == 0)
 			data->posX += data->dirX * MOVE_SPEED;
 	}
-	if (key == KEY_LEFT)
-	{}
-	if (key == KEY_RIGHT)
-	{}
+	if (key == KEY_S)
+	{		
+		if(data->num_map[(int)(data->posY - data->dirY * MOVE_SPEED)][(int) data->posX] == 0)
+			data->posY -= data->dirY * MOVE_SPEED;
+		if(data->num_map[(int) data->posY][(int)(data->posX - data->dirX * MOVE_SPEED)] == 0)
+			data->posX -= data->dirX * MOVE_SPEED;
+	}
+	rotate_keys(key, data);
 	if (key == KEY_ESC)
 		exit(EXIT_SUCCESS);
 	mlx_destroy_image(data->ptr, data->img->img);
