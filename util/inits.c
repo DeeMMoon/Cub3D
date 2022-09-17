@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:48:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/17 17:34:14 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:06:18 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,17 @@ int	deal_key(int key, t_data *data)
 {
 	if (key == KEY_A)
 	{
-		if(data->num_map[(int) (data->posY + data->dirY * MOVE_SPEED - MOVE_SPEED)][(int) (data->posX)] == 0)
+		if(data->num_map[(int) (data->posY + data->dirX * MOVE_SPEED - MOVE_SPEED)][(int) (data->posX)] == 0)
 			data->posY += data->dirX * MOVE_SPEED;
-		if(data->num_map[(int) (data->posY)][(int) (data->posX + data->dirX * MOVE_SPEED - MOVE_SPEED)] == 0)
-			data->posX += data->dirY * MOVE_SPEED;
-		printf("%f\n", data->dirX);
-		printf("%f\n", data->dirY);
+		if(data->num_map[(int) (data->posY)][(int) (data->posX - data->dirY * MOVE_SPEED - MOVE_SPEED)] == 0)
+			data->posX -= data->dirY * MOVE_SPEED;
 	}
 	if (key == KEY_D)
 	{
-		if(data->num_map[(int) (data->posY - data->dirY * MOVE_SPEED + MOVE_SPEED)][(int)((int) data->posX)] == 0)
-			data->posY -= data->dirY * MOVE_SPEED;
-		if(data->num_map[(int) (data->posY)][(int)(data->posX - data->dirX * MOVE_SPEED)] == 0)
-			data->posX -= data->dirX * MOVE_SPEED;
+		if(data->num_map[(int) (data->posY - data->dirX * MOVE_SPEED + MOVE_SPEED)][(int)((int) data->posX)] == 0)
+			data->posY -= data->dirX * MOVE_SPEED;
+		if(data->num_map[(int) (data->posY)][(int)(data->posX + data->dirY * MOVE_SPEED + MOVE_SPEED)] == 0)
+			data->posX += data->dirY * MOVE_SPEED;
 	}
 	if (key == KEY_W)
 	{	
