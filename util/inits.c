@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: utawana <utawana@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:48:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/17 18:06:18 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:31:23 by utawana          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	init_data(t_data *data, t_map *map)
 	data->img->img = mlx_new_image(data->ptr, HEIGHT, WIDTH);
 	data->img->addr = mlx_get_data_addr(data->img->img, &(data->img->bits_per_pixel) \
 	, &(data->img->line_length), &(data->img->endian));
-	data->dirX = -1;
-	data->dirY = 0;
 	data->planeX = 0;
 	data->planeY = 0.66;
 	data->num_map = NULL;
@@ -59,21 +57,22 @@ void rotate_keys(int key, t_data *data)
 	if (key == KEY_RIGHT)
 	{
 		oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(-ROT_SPEED) - data->dirY * sin(-ROT_SPEED);
-		data->dirY = oldDirX * sin(-ROT_SPEED) + data->dirY * cos(-ROT_SPEED); 
-		oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(-ROT_SPEED) - data->planeY * sin(-ROT_SPEED);
-		data->planeY = oldPlaneX * sin(-ROT_SPEED) + data->planeY * cos(-ROT_SPEED);
-	}
-	if (key == KEY_LEFT)
-	{
-		oldDirX = data->dirX;
 		data->dirX = data->dirX * cos(ROT_SPEED) - data->dirY * sin(ROT_SPEED);
 		data->dirY = oldDirX * sin(ROT_SPEED) + data->dirY * cos(ROT_SPEED); 
 		oldPlaneX = data->planeX;
 		data->planeX = data->planeX * cos(ROT_SPEED) - data->planeY * sin(ROT_SPEED);
 		data->planeY = oldPlaneX * sin(ROT_SPEED) + data->planeY * cos(ROT_SPEED);
 	}
+	if (key == KEY_LEFT)
+	{
+		oldDirX = data->dirX;
+		data->dirX = data->dirX * cos(-ROT_SPEED) - data->dirY * sin(-ROT_SPEED);
+		data->dirY = oldDirX * sin(-ROT_SPEED) + data->dirY * cos(-ROT_SPEED); 
+		oldPlaneX = data->planeX;
+		data->planeX = data->planeX * cos(-ROT_SPEED) - data->planeY * sin(-ROT_SPEED);
+		data->planeY = oldPlaneX * sin(-ROT_SPEED) + data->planeY * cos(-ROT_SPEED);
+	}
+	printf("%lf %lf\n", data->dirX, data->dirY);
 }
 
 int	deal_key(int key, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: utawana <utawana@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/17 16:15:56 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/30 13:17:18 by utawana          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,6 @@ void	draw_image(t_data *data);
 void	create_num_map(t_data *data);
 void	get_start_pos(t_data *data);
 
+int ft_start_y (t_data *data);
+int ft_start_x (t_data *data);
 #endif

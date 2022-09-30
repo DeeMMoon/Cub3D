@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   not_empty_gnl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: utawana <utawana@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 17:10:59 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 16:40:54 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:03:43 by utawana          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,22 @@ char	*not_empty_gnl(int fd)
 	if (!line)
 		return (NULL);
 	return (line);
+}
+
+int ft_start_x(t_data *data) {
+	if (data->orientation == 'S' || data->orientation == 'N')
+		return (0);
+	if (data->orientation == 'E')
+		return (-1);
+	if (data->orientation == 'W')
+		return (1);
+}
+
+int ft_start_y(t_data *data) {
+	if (data->orientation == 'E' || data->orientation == 'W')
+		return (0);
+	if (data->orientation == 'S')
+		return (-1);
+	if (data->orientation == 'N')
+		return (1);
 }

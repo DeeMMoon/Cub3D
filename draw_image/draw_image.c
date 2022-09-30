@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_image.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: utawana <utawana@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:58:52 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/12 19:34:58 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:26:31 by utawana          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	set_start_pos(t_data *data, char c, int i, int j)
 {
 	data->map->new_map[i][j] = '0';
 	data->orientation = c;
+	data->dirX = ft_start_x(data);
+	data->dirY = ft_start_y(data);
 	data->posX = j;
 	data->posY = i;
 }
@@ -136,7 +138,7 @@ void	dda(t_data *data, int x)
 		if (data->num_map[data->mapY][data->mapX] > 0)
 			data->hit = 1;
 	}
-	if (data->side == 0) 
+	if (data->side == 0)
 		data->perpWallDist = (data->sideDistX - data->deltaDistX);
     else
 		data->perpWallDist = (data->sideDistY - data->deltaDistY);
@@ -155,13 +157,13 @@ void	draw_image(t_data *data)
 		data->rayDirY = data->dirY + data->planeY * data->cameraX;
 		data->mapX = (int) data->posX;
 		data->mapY = (int) data->posY;
-		if (data->rayDirX == 0)
-			data->deltaDistX = HUGE_VAL;
-		else
+		// if (data->rayDirX == 0)
+		// 	data->deltaDistX = HUGE_VAL;
+		// else
 			data->deltaDistX = fabs(1 / data->rayDirX);
-		if (data->rayDirY == 0)
-			data->deltaDistY = HUGE_VAL;
-		else
+		// if (data->rayDirY == 0)
+		// 	data->deltaDistY = HUGE_VAL;
+		// else
 			data->deltaDistY = fabs(1 / data->rayDirY);
 		data->hit = 0;
 		steps(data);
