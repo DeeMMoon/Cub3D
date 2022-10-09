@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/17 16:15:56 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:26:16 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
 
 # define KEY_W			13
 # define KEY_A			0
@@ -99,6 +101,18 @@ typedef struct s_data
 	double	perpWallDist;
 	int		hit;
 	int		side;
+	double		wallX;
+	int			texX;
+	int			texY;
+	double		step;
+	double		texPos;
+	unsigned int	color;
+	int		lineHeight;
+	int		wall;
+	t_img	textures[4];
+	unsigned int mask;
+	t_img	*tex;
+	
 }			t_data;
 
 void	ft_error(char *str);
@@ -132,5 +146,14 @@ int		deal_key(int key, t_data *data);
 void	draw_image(t_data *data);
 void	create_num_map(t_data *data);
 void	get_start_pos(t_data *data);
+
+int ft_start_y (t_data *data);
+int ft_start_x (t_data *data);
+
+unsigned int	mlx_get_pixel(t_img *img, int x, int y);
+int				get_tex_x(t_data *data);
+int	clz(unsigned int i);
+void load_textures(t_data *data);
+t_img	get_img_from_xpm(t_data *data, char *path);
 
 #endif
