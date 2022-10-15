@@ -6,14 +6,14 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 17:08:50 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/03 16:35:39 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:45:40 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# ifndef BUFFER_SIZE
+# ifndef	BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
 

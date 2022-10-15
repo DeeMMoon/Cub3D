@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 18:20:33 by gantedil          #+#    #+#             */
-/*   Updated: 2022/08/17 18:35:37 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:19:10 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,14 @@ int	check_full_config(t_map *map)
 	if (map->config->ceiling == NULL)
 		return (0);
 	return (1);
+}
+
+int	check_map(t_map *map)
+{
+	if (map->width - 1 < 3 || map->height < 3)
+		return (1);
+	if (check_top(map) || check_left(map) || check_bottom(map) \
+		|| check_right(map))
+		return (1);
+	return (0);
 }

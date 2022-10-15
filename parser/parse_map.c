@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:27:09 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/07 17:10:03 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:19:06 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	check_right(t_map *map)
 	i = 0;
 	while (i < map->height)
 	{
-		if (map->new_map[i][map->width - 1] != ' ' 
+		if (map->new_map[i][map->width - 1] != ' ' \
 			&& map->new_map[i][map->width - 1] != '1')
 			return (1);
 		j = map->width - 1;
@@ -88,16 +88,6 @@ int	check_right(t_map *map)
 			return (1);
 		i++;
 	}
-	return (0);
-}
-	
-int	check_map(t_map *map)
-{
-	if (map->width - 1 < 3 || map->height < 3)
-		return (1);
-	if (check_top(map)|| check_left(map) || check_bottom(map) \
-		|| check_right(map))
-		return (1);
 	return (0);
 }
 

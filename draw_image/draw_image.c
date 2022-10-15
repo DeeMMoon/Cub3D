@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:58:52 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 19:19:09 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:09:05 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	set_start_pos(t_data *data, char c, int i, int j)
 {
 	data->map->new_map[i][j] = '0';
 	data->orientation = c;
-	data->dirX = ft_start_x(data);
-	data->dirY = ft_start_y(data);
-	data->planeX = - data->dirY * 0.66;
-	data->planeY = data->dirX * 0.66;
-	data->posX = j;
-	data->posY = i;
+	data->dir_x = ft_start_x(data);
+	data->dir_y = ft_start_y(data);
+	data->plane_x = -data->dir_y * 0.66;
+	data->plane_y = data->dir_x * 0.66;
+	data->pos_x = j;
+	data->pos_y = i;
 }
 
 void	get_start_pos(t_data *data)
@@ -37,8 +37,10 @@ void	get_start_pos(t_data *data)
 		j = 0;
 		while (data->map->new_map[i][j])
 		{
-			if (data->map->new_map[i][j] == 'N' || data->map->new_map[i][j] == 'S' \
-				|| data->map->new_map[i][j] == 'W' || data->map->new_map[i][j] == 'E')
+			if (data->map->new_map[i][j] == 'N' \
+				|| data->map->new_map[i][j] == 'S' \
+				|| data->map->new_map[i][j] == 'W' \
+				|| data->map->new_map[i][j] == 'E')
 			{
 				if (flag == 1)
 					ft_error("Use more one person");
@@ -51,111 +53,28 @@ void	get_start_pos(t_data *data)
 	}	
 }
 
-void	steps(t_data *data)
-{
-	if (data->rayDirX < 0)
-    {
-    	data->stepX = -1;
-    	data->sideDistX = (data->posX - data->mapX) * data->deltaDistX;
-	}
-    else
-    {
-    	data->stepX = 1;
-    	data->sideDistX = (data->mapX + 1.0 - data->posX) * data->deltaDistX;
-    }
-    if (data->rayDirY < 0)
-    {
-    	data->stepY = -1;
-    	data->sideDistY = (data->posY - data->mapY) * data->deltaDistY;
-    }
-    else
-    {
-    	data->stepY = 1;
-    	data->sideDistY = (data->mapY + 1.0 - data->posY) * data->deltaDistY;
-    }
-}
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)
 {
 	char	*dst;
 
-	dst = data->img->addr + (y * data->img->line_length + x * (data->img->bits_per_pixel / 8));
+	dst = data->img->addr + (y * data->img->line_length + x \
+		* (data->img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
-}
-
-void	draw_line(t_data *data, int start, int end, int x)
-{
-	int		y;
-	int		ty;
-	int		color;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		texture_calc(data, start, end);
-		if (y < start)
-			my_mlx_pixel_put(data, x, y, data->map->ceiling_color);
-		else if (y > end)
-			my_mlx_pixel_put(data, x, y, data->map->floor_color);
-		else 
-		{
-			ty = (((y - start) * data->mask / data->lineHeight)
-				& (data->mask - 1)) * ((double)data->textures->height / data->mask);
-			color = mlx_get_pixel(data, data->tex, data->texX, ty);
-			my_mlx_pixel_put(data, x, y,color);
-		}
-		y++;
-	} 
 }
 
 void	draw_lines(t_data *data, int x)
 {
-	int	drawStart;
-	int	drawEnd;
+	int	draw_start;
+	int	draw_end;
 
-	data->lineHeight = (int)(HEIGHT / data->perpWallDist);
-	drawStart = - data->lineHeight / 2 + HEIGHT / 2;
-	drawEnd = data->lineHeight / 2 + HEIGHT / 2;
-	data->texX = get_tex_x(data);
+	data->line_height = (int)(HEIGHT / data->perp_wall_dist);
+	draw_start = -data->line_height / 2 + HEIGHT / 2;
+	draw_end = data->line_height / 2 + HEIGHT / 2;
+	data->tex_x = get_tex_x(data);
 	data->tex = &data->textures[data->wall];
 	data->mask = 1 << ((sizeof(unsigned int) << 3)
 			- clz(TEXHEIGHT));
-	draw_line(data, drawStart, drawEnd, x);
-}
-
-void	dda(t_data *data, int x)
-{
-	while (data->hit == 0)
-	{
-		if (data->sideDistX < data->sideDistY)
-		{
-			data->sideDistX += data->deltaDistX;
-			data->mapX += data->stepX;
-			data->side = 0;
-		}
-		else
-		{
-			data->sideDistY += data->deltaDistY;
-			data->mapY += data->stepY;
-			data->side = 1;
-		}
-		if (data->num_map[data->mapY][data->mapX] > 0) {
-			data->hit = 1;
-			if (data->side == 0 && data->rayDirX > 0)
-				data->wall = 0;
-			else if (data->side == 0 && data->rayDirX <= 0)
-				data->wall = 1;
-			else if (data->side == 1 && data->rayDirY > 0)
-				data->wall = 2;
-			else if (data->side == 1 && data->rayDirY <= 0)
-				data->wall = 3;
-		}
-	}
-	if (data->side == 0)
-		data->perpWallDist = (data->sideDistX - data->deltaDistX);
-	else
-		data->perpWallDist = (data->sideDistY - data->deltaDistY);
-	draw_lines(data, x);
+	draw_line(data, draw_start, draw_end, x);
 }
 
 void	draw_image(t_data *data)
@@ -165,13 +84,13 @@ void	draw_image(t_data *data)
 	x = 0;
 	while (x < WIDTH)
 	{
-		data->cameraX = 2 * x / (double)WIDTH - 1;
-		data->rayDirX = (data->dirX + data->planeX * data->cameraX);
-		data->rayDirY = (data->dirY + data->planeY * data->cameraX);
-		data->mapX = (int) data->posX;
-		data->mapY = (int) data->posY;
-		data->deltaDistX = fabs(1 / data->rayDirX);
-		data->deltaDistY = fabs(1 / data->rayDirY);
+		data->camera_x = 2 * x / (double)WIDTH - 1;
+		data->ray_dir_x = (data->dir_x + data->plane_x * data->camera_x);
+		data->ray_dir_y = (data->dir_y + data->plane_y * data->camera_x);
+		data->map_x = (int) data->pos_x;
+		data->map_y = (int) data->pos_y;
+		data->delta_dist_x = fabs(1 / data->ray_dir_x);
+		data->delta_dist_y = fabs(1 / data->ray_dir_y);
 		data->hit = 0;
 		steps(data);
 		dda(data, x);

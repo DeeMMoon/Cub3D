@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 14:40:49 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:24:31 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ int	check_filename(char *filename)
 	return (0);
 }
 
+void	main_loop(t_data *data)
+{
+	get_start_pos(data);
+	create_num_map(data);
+	load_textures(data);
+	draw_image(data);
+	mlx_put_image_to_window(data->ptr, data->win, data->img->img, 0, 0);
+	mlx_hook(data->win, 17, 0L, close_win, data);
+	mlx_key_hook(data->win, deal_key, data);
+	mlx_loop(data->ptr);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map		*map;
@@ -60,14 +72,7 @@ int	main(int argc, char **argv)
 		data = (t_data *) malloc(sizeof (t_data));
 		if (!init_data(data, map))
 			ft_error("Init faled");
-		get_start_pos(data);
-		create_num_map(data);
-		load_textures(data);
-		draw_image(data);
-		mlx_put_image_to_window(data->ptr, data->win, data->img->img, 0, 0);
-		mlx_hook(data->win, 17, 0L, close_win, data);
-		mlx_key_hook(data->win, deal_key, data);
-		mlx_loop(data->ptr);
+		main_loop(data);
 	}
 	return (0);
 }

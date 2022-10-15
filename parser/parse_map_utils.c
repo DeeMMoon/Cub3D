@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 16:24:22 by gantedil          #+#    #+#             */
-/*   Updated: 2022/09/07 17:08:41 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:19:02 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	util_right(t_map *map, int *j, int *i)
 	return (0);
 }
 
-void fill_map(t_map *map)
+void	fill_map(t_map *map)
 {
 	int	i;
 	int	j;
