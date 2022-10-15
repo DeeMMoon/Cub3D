@@ -6,41 +6,27 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 13:38:10 by utawana           #+#    #+#             */
-/*   Updated: 2022/10/09 19:26:37 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:11:40 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-// void	texture_calc(t_data *data, int drawStart, int drawEnd)
-// {
-// 	if (data->side == 0)
-// 		data->wallX = data->posY + data->perpWallDist * data->rayDirY;
-// 	else
-// 		data->wallX = data->posX + data->perpWallDist * data->rayDirX;
-// 	data->wallX -= floor(data->wallX);
-// 	data->texX = (int)(data->wallX * (double)TEXWIDTH);
-// 	if (data->side == 0 && data->rayDirX > 0)
-// 		data->texX = TEXWIDTH - data->texX - 1;
-// 	if (data->side == 1 && data->rayDirY < 0)
-// 		data->texX = TEXWIDTH - data->texX - 1;
-// 	data->step = 1.0 * TEXHEIGHT / data->lineHeight;
-// 	data->texPos = (drawStart - HEIGHT / 2 + data->lineHeight / 2) * data->step;
-// }
-
-// void	draw_textures(t_data *data, int drawStart, int drawEnd)
-// {
-// 	while (drawStart < drawEnd)
-// 	{
-// 		data->texY = (int)data->texPos & (TEXHEIGHT - 1);
-// 		data->texPos += data->step;
-// 		*(data->img) = get_img_from_xpm(data->ptr, "sprites/bluestone.xpm");
-// 		data->color = *(unsigned int *)(data->img->addr + (data->texX * data->img->bits_per_pixel / 8 + data->texY * data->img->line_length));
-// 		my_mlx_pixel_put(data, data->posX * 2, drawStart, data->color);
-// 		my_mlx_pixel_put(data, data->posX * 2 + 1, drawStart, data->color);
-// 		drawStart++;
-// 	}
-// }
+void	texture_calc(t_data *data, int drawStart, int drawEnd)
+{
+	if (data->side == 0)
+		data->wallX = data->posY + data->perpWallDist * data->rayDirY;
+	else
+		data->wallX = data->posX + data->perpWallDist * data->rayDirX;
+	data->wallX -= floor(data->wallX);
+	data->texX = (int)(data->wallX * (double)TEXWIDTH);
+	if (data->side == 0 && data->rayDirX > 0)
+		data->texX = (TEXWIDTH - data->texX - 1);
+	if (data->side == 1 && data->rayDirY < 0)
+		data->texX = (TEXWIDTH - data->texX - 1);
+	data->step = 1.0 * TEXHEIGHT / data->lineHeight;
+	data->texPos = (drawStart - HEIGHT / 2 + data->lineHeight / 2) * data->step;
+}
 
 t_img	get_img_from_xpm(t_data *data, char *path)
 {
@@ -96,13 +82,13 @@ int	get_tex_x(t_data *data)
 	wall_x -= floor((wall_x));
 	tex_x = (int)(wall_x * (double)data->textures[data->wall].width);
 	if ((data->wall == 2 || data->wall == 3) && data->dirX > 0)
-		tex_x = data->textures[3].width - tex_x - 1;
+		tex_x = (data->textures[3].width - tex_x - 1);
 	if ((data->wall == 0 || data->wall == 1) && data->dirY < 0)
 		tex_x = data->textures[0].width - tex_x - 1;
 	return (tex_x);
 }
 
-unsigned int	mlx_get_pixel(t_img *img, int x, int y)
+unsigned int	mlx_get_pixel(t_data *data, t_img *img, int x, int y)
 {
 	char	*dst;
 

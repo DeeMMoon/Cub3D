@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:58:52 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/09 19:26:11 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:19:09 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,17 @@ void	draw_line(t_data *data, int start, int end, int x)
 	y = 0;
 	while (y < HEIGHT)
 	{
+		texture_calc(data, start, end);
 		if (y < start)
 			my_mlx_pixel_put(data, x, y, data->map->ceiling_color);
 		else if (y > end)
 			my_mlx_pixel_put(data, x, y, data->map->floor_color);
-		else if(data->lineHeight)
+		else 
 		{
-			ty = (((y - start) * data->mask / data->lineHeight) 
-				& (data->mask - 1)) * ((double)TEXHEIGHT / data->mask);
-			color = mlx_get_pixel(data->tex, data->texX, ty);
+			ty = (((y - start) * data->mask / data->lineHeight)
+				& (data->mask - 1)) * ((double)data->textures->height / data->mask);
+			color = mlx_get_pixel(data, data->tex, data->texX, ty);
 			my_mlx_pixel_put(data, x, y,color);
-		// 	texture_calc(data, start, end);
-		// 	draw_textures(data, start, end);
 		}
 		y++;
 	} 
@@ -114,13 +113,9 @@ void	draw_lines(t_data *data, int x)
 	int	drawStart;
 	int	drawEnd;
 
-	data->lineHeight = (HEIGHT / data->perpWallDist);
+	data->lineHeight = (int)(HEIGHT / data->perpWallDist);
 	drawStart = - data->lineHeight / 2 + HEIGHT / 2;
-	if (drawStart < 0)
-		drawStart = 0;
 	drawEnd = data->lineHeight / 2 + HEIGHT / 2;
-	if (drawEnd >= HEIGHT)
-		drawEnd = HEIGHT - 1;
 	data->texX = get_tex_x(data);
 	data->tex = &data->textures[data->wall];
 	data->mask = 1 << ((sizeof(unsigned int) << 3)
@@ -168,12 +163,11 @@ void	draw_image(t_data *data)
 	int	x;
 
 	x = 0;
-	load_textures(data);
 	while (x < WIDTH)
 	{
 		data->cameraX = 2 * x / (double)WIDTH - 1;
-		data->rayDirX = data->dirX + data->planeX * data->cameraX;
-		data->rayDirY = data->dirY + data->planeY * data->cameraX;
+		data->rayDirX = (data->dirX + data->planeX * data->cameraX);
+		data->rayDirY = (data->dirY + data->planeY * data->cameraX);
 		data->mapX = (int) data->posX;
 		data->mapY = (int) data->posY;
 		data->deltaDistX = fabs(1 / data->rayDirX);

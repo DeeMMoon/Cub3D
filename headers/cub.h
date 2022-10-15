@@ -6,7 +6,7 @@
 /*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/09 19:26:16 by gantedil         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:41:25 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,11 @@ void	get_start_pos(t_data *data);
 int ft_start_y (t_data *data);
 int ft_start_x (t_data *data);
 
-unsigned int	mlx_get_pixel(t_img *img, int x, int y);
+unsigned int	mlx_get_pixel(t_data *data, t_img *img, int x, int y);
 int				get_tex_x(t_data *data);
 int	clz(unsigned int i);
 void load_textures(t_data *data);
 t_img	get_img_from_xpm(t_data *data, char *path);
+void	texture_calc(t_data *data, int drawStart, int drawEnd);
 
 #endif

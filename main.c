@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utawana <utawana@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:03:35 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/09 12:48:10 by utawana          ###   ########.fr       */
+/*   Updated: 2022/10/15 14:40:49 by gantedil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv)
 			ft_error("Init faled");
 		get_start_pos(data);
 		create_num_map(data);
+		load_textures(data);
 		draw_image(data);
 		mlx_put_image_to_window(data->ptr, data->win, data->img->img, 0, 0);
 		mlx_hook(data->win, 17, 0L, close_win, data);
