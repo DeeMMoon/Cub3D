@@ -1,16 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_texture_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 18:20:33 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 20:19:10 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../headers/cub.h"
+
+void	ft_free_arr(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	while (--i >= 0)
+		free(str[i]);
+	free(str);
+}
 
 int	find_param(char *line)
 {
@@ -32,17 +32,18 @@ int	find_param(char *line)
 void	set_config(int num, char *str, t_map *map)
 {
 	if (num == 1)
-		map->config->no = str;
+		map->config->no = ft_strdup(str);
 	else if (num == 2)
-		map->config->so = str;
+		map->config->so = ft_strdup(str);
 	else if (num == 3)
-		map->config->we = str;
+		map->config->we = ft_strdup(str);
 	else if (num == 4)
-		map->config->ea = str;
+		map->config->ea = ft_strdup(str);
 	else if (num == 5)
-		map->config->floor = str;
+		map->config->floor = ft_strdup(str);
 	else if (num == 6)
-		map->config->ceiling = str;
+		map->config->ceiling = ft_strdup(str);
+	free(str);
 }
 
 int	check_full_config(t_map *map)

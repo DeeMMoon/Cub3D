@@ -1,40 +1,41 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_texture.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 18:19:13 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 20:19:15 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../headers/cub.h"
+
+int	check_config_two(char *line, t_map *map, int param_num, char **strs)
+{
+	char	*str;
+	char	*tmp;
+	int		i;
+
+	i = 2;
+	str = ft_strdup(strs[1]);
+	while (strs[i])
+	{
+		tmp = ft_strjoin(str, strs[i]);
+		free(str);
+		str = ft_strdup(tmp);
+		free(tmp);
+		i++;
+	}
+	set_config(param_num, str, map);
+	ft_free_arr(strs);
+	return (0);
+}
 
 int	check_config(char *line, t_map *map)
 {
 	char	**strs;
-	char	*str;
 	int		param_num;
-	int		i;
 
 	strs = ft_split(line, ' ');
 	if (!strs)
 		return (1);
 	param_num = find_param(strs[0]);
 	if (param_num == 0)
-		return (1);
-	i = 2;
-	str = strs[1];
-	while (strs[i])
 	{
-		str = ft_strjoin(str, strs[i]);
-		i++;
+		ft_free_arr(strs);
+		return (1);
 	}
-    //очистить strs
-	set_config(param_num, str, map);
-	return (0);
+	return (check_config_two(line, map, param_num, strs));
 }
 
 long	get_color(int *rgb)
@@ -54,6 +55,23 @@ long	get_color(int *rgb)
 	return (color);
 }
 
+long	set_color_two(int i, int *rgb, char	**colors, long res)
+{
+	rgb = malloc(sizeof(int) * 4);
+	i = 0;
+	while (i <= 3 && colors[i])
+	{
+		rgb[i] = ft_atoi(colors[i]);
+		if (rgb[i] > 255 || rgb[i] < 0)
+			ft_error("Wrong param color");
+		i++;
+	}
+	rgb[i] = -1;
+	i = 0;
+	ft_free_arr(colors);
+	res = get_color(rgb);
+}
+
 long	set_color(char *place)
 {
 	int		*rgb;
@@ -69,18 +87,5 @@ long	set_color(char *place)
 		i++;
 	if (i != 3)
 		ft_error("Wrong param color");
-	rgb = malloc(sizeof(int) * 4);
-	i = 0;
-	while (i <= 3 && colors[i])
-	{
-		rgb[i] = ft_atoi(colors[i]);
-		if (rgb[i] > 255 || rgb[i] < 0)
-			ft_error("Wrong param color");
-		i++;
-	}
-	rgb[i] = -1;
-	i = 0;
-    //очистить colors
-	res = get_color(rgb);
-	return (res);
+	return (set_color_two(i, rgb, colors, res));
 }

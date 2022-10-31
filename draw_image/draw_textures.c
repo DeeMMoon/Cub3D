@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw_textures.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 13:38:10 by utawana           #+#    #+#             */
-/*   Updated: 2022/10/15 20:18:47 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../headers/cub.h"
 
 void	texture_calc(t_data *data, int drawStart, int drawEnd)
@@ -50,10 +38,10 @@ t_img	get_img_from_xpm(t_data *data, char *path)
 
 void	load_textures(t_data *data)
 {
-	data->textures[0] = get_img_from_xpm(data, data->map->config->no);
-	data->textures[1] = get_img_from_xpm(data, data->map->config->so);
-	data->textures[2] = get_img_from_xpm(data, data->map->config->ea);
-	data->textures[3] = get_img_from_xpm(data, data->map->config->we);
+	data->textures[3] = get_img_from_xpm(data, data->map->config->no);
+	data->textures[2] = get_img_from_xpm(data, data->map->config->so);
+	data->textures[0] = get_img_from_xpm(data, data->map->config->ea);
+	data->textures[1] = get_img_from_xpm(data, data->map->config->we);
 }
 
 int	clz(unsigned int i)

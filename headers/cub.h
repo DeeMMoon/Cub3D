@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 16:06:56 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 20:18:51 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB_H
 # define CUB_H
 
@@ -163,5 +151,7 @@ int				check_top(t_map *map);
 int				check_left(t_map *map);
 int				check_right(t_map *map);
 int				check_bottom(t_map *map);
+void			ft_free_arr(char **str);
+void			create_new_map_two(t_map *map, char *line, int fd);
 
 #endif

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 17:27:09 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 20:19:06 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../headers/cub.h"
 
 int	check_top(t_map *map)
@@ -95,7 +83,6 @@ void	create_new_map(t_map *map, char *file, char *first_line)
 {
 	int		fd;
 	char	*line;
-	int		i;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -103,17 +90,9 @@ void	create_new_map(t_map *map, char *file, char *first_line)
 	map->new_map = (char **) malloc(sizeof(char *) * map->height);
 	line = not_empty_gnl(fd);
 	while (ft_strncmp(line, first_line, ft_strlen(first_line)) != 0)
-		line = not_empty_gnl(fd);
-	i = 0;
-	while (line)
 	{
-		map->new_map[i] = get_norm_lenght_line(line, map->width);
-		line = get_next_line(fd);
-		i++;
-	}
-	if (line)
 		free(line);
-	if (check_map(map))
-		ft_error("Ivalid map");
-	fill_map(map);
+		line = not_empty_gnl(fd);
+	}
+	create_new_map_two(map, line, fd);
 }

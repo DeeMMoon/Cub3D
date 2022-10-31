@@ -1,30 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_file.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gantedil <gantedil@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 21:09:25 by gantedil          #+#    #+#             */
-/*   Updated: 2022/10/15 20:18:57 by gantedil         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../headers/cub.h"
-
-void	print_info(t_map *map)
-{
-	printf("NO = %s\n", map->config->no);
-	printf("SO = %s\n", map->config->so);
-	printf("WE = %s\n", map->config->we);
-	printf("EA = %s\n", map->config->ea);
-	printf("F = %s\n", map->config->floor);
-	printf("C = %s\n", map->config->ceiling);
-	printf("F_COLOR = %ld\n", map->floor_color);
-	printf("C_COLOR = %ld\n", map->ceiling_color);
-	printf("height = %d\n", map->height);
-	printf("width = %d\n\n", map->width);
-}
 
 void	parse_texture(t_map *map, int fd)
 {
@@ -32,8 +6,10 @@ void	parse_texture(t_map *map, int fd)
 	int		i;
 
 	i = 0;
+	line = malloc(1);
 	while (i != 6)
 	{
+		free(line);
 		line = not_empty_gnl(fd);
 		if (check_config(line, map))
 		{
@@ -73,6 +49,7 @@ void	parse_map(t_map *map, int fd, char *file)
 	}
 	free (line);
 	create_new_map(map, file, first_line);
+	free(first_line);
 }
 
 int	parse_file(t_map *map, char *file)
@@ -85,4 +62,22 @@ int	parse_file(t_map *map, char *file)
 	parse_texture(map, fd);
 	parse_map(map, fd, file);
 	return (0);
+}
+
+void	create_new_map_two(t_map *map, char *line, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (line)
+	{
+		map->new_map[i] = get_norm_lenght_line(line, map->width);
+		line = get_next_line(fd);
+		i++;
+	}
+	if (line)
+		free(line);
+	if (check_map(map))
+		ft_error("Ivalid map");
+	fill_map(map);
 }
